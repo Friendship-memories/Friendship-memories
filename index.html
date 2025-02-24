@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendship Memories</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .tab { display: none; }
+        .tab.active { display: block; }
+        .tab-buttons { margin: 20px; }
+        button { margin: 5px; padding: 10px; cursor: pointer; }
+        .upload-section { margin: 20px; }
+        img, video { max-width: 100%; height: auto; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Friendship Memories</h1>
+    <div class="tab-buttons">
+        <button onclick="openTab('home')">Home</button>
+        <button onclick="openTab('photos')">Photos</button>
+        <button onclick="openTab('videos')">Videos</button>
+    </div>
+    
+    <div id="home" class="tab active">
+        <h2>Home</h2>
+        <p>Share your precious friendship memories here.</p>
+    </div>
+    
+    <div id="photos" class="tab">
+        <h2>Photo Gallery</h2>
+        <input type="file" accept="image/*" onchange="uploadPhoto(event)">
+        <div id="photoGallery"></div>
+    </div>
+    
+    <div id="videos" class="tab">
+        <h2>Video Gallery</h2>
+        <input type="file" accept="video/*" onchange="uploadVideo(event)">
+        <div id="videoGallery"></div>
+    </div>
+    
+    <script>
+        function openTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        function uploadPhoto(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    document.getElementById('photoGallery').appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function uploadVideo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const video = document.createElement('video');
+                    video.src = e.target.result;
+                    video.controls = true;
+                    document.getElementById('videoGallery').appendChild(video);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
